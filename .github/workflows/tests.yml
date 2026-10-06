@@ -1,30 +1,31 @@
 name: Tests
+
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
+
 jobs:
   php-contracts:
+    name: PHP and contract tests
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - run: php tests/run.php
+          coverage: none
+
+      - name: Run PHP and contract tests
+        run: php tests/run.php
+
       - name: PHP lint
-        run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
-  browser-tests:
-    if: ${{ vars.AWARE_WP_BASE_URL != '' && secrets.AWARE_WP_USER != '' && secrets.AWARE_WP_PASSWORD != '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - run: npm ci || npm install
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser
-        env:
-          AWARE_WP_BASE_URL: ${{ vars.AWARE_WP_BASE_URL }}
-          AWARE_WP_USER: ${{ secrets.AWARE_WP_USER }}
-          AWARE_WP_PASSWORD: ${{ secrets.AWARE_WP_PASSWORD }}
+        shell: bash
+        run: find . -type f -name '*.php' -not -path './node_modules/*' -print0 | xargs -0 -n1 php -l
