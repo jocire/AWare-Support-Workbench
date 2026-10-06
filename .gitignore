@@ -1,0 +1,27 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node / Playwright
+node_modules/
+playwright-report/
+test-results/
+blob-report/
+
+# Local environment/secrets
+.env
+.env.*
+!.env.example
+
+# Build / package artifacts
+*.zip
+dist/
+build/
+
+# Temporary files/logs
+*.log
+*.tmp
+*.swp
+coverage/

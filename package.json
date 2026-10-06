@@ -1,0 +1,14 @@
+{
+  "name": "aware-support-workbench-tests",
+  "private": true,
+  "version": "1.0.0-rc1",
+  "scripts": {
+    "test:php": "php tests/run.php",
+    "test:browser": "playwright test",
+    "test": "npm run test:php && npm run test:browser"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "dotenv": "^16.4.5"
+  }
+}
